@@ -1,0 +1,10 @@
+{
+  "hub_bridge_info":
+  {
+    "test_hue_bridge": {
+      "MAC":"001788FFFEB2478E",
+      "IP":"172.20.10.13",
+      "Name":"テスト"
+    }
+  }
+}

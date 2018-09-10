@@ -1,0 +1,28 @@
+[debug] [2018-09-10T00:55:35.343Z] ----------------------------------------------------------------------
+[debug] [2018-09-10T00:55:35.346Z] Command:       /usr/local/Cellar/node/10.9.0/bin/node /usr/local/bin/firebase serve --only hosting
+[debug] [2018-09-10T00:55:35.346Z] CLI Version:   4.2.1
+[debug] [2018-09-10T00:55:35.346Z] Platform:      darwin
+[debug] [2018-09-10T00:55:35.346Z] Node Version:  v10.9.0
+[debug] [2018-09-10T00:55:35.351Z] Time:          Mon Sep 10 2018 09:55:35 GMT+0900 (Japan Standard Time)
+[debug] [2018-09-10T00:55:35.351Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-10T00:55:35.368Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-10T00:55:35.368Z] > authorizing via signed-in user
+[debug] [2018-09-10T00:55:35.370Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-10T00:55:35.370Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-09-10T00:55:35.745Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-10T00:55:35.763Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/rcs-hue-control-demo  
+ 
+[debug] [2018-09-10T00:55:36.819Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-10T00:55:36.820Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/rcs-hue-control-demo  
+ 
+[debug] [2018-09-10T00:55:38.089Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/a11-10710403/rcs_hue_bot'...
+[info] 
+[debug] [2018-09-10T00:55:38.093Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/702777415011/clients/_:getWebAppConfig  
+ 
+[debug] [2018-09-10T00:55:38.942Z] <<< HTTP RESPONSE 200
+[info] i  hosting[rcs-hue-control-demo]: Serving hosting files from: public
+[info] ✔  hosting[rcs-hue-control-demo]: Local server: http://localhost:5000

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Self-defined CSS -->
+    <link rel="stylesheet" href="css/bs-callout.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hue Control Test</title>
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Friendly Chat">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Friendly Chat">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <title>Hue Control Center Alpha</title>
+      <!-- Firebase App is always required and must be first -->
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+
+      <!-- Add additional services you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-messaging.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-functions.js"></script>
+
+      <!-- Comment out (or don't include) services you don't want to use -->
+      <!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-storage.js"></script> -->
+
+  </head>
+  <body class="main-frame">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand text-white" href="#">Hue Control Center TestVer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-link text-white" id="go-to-firebase" href="#">Firebase <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ユーザーオプション
+                  </a>
+                  <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item text-white" data-toggle="modal" data-target="#add-user-modal">ユーザー追加</a>
+                      <a class="dropdown-item text-white" data-toggle="modal" data-target="#select-user-modal">ユーザー選択</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item text-white" data-toggle="modal" data-target="#find-bridge-modal">Find Bridge</a>
+                      <a class="dropdown-item text-white" data-toggle="modal" data-target="#select-bridge-modal">Select Bridge</a>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  </nav>
+  <!-- Modal for ユーザーオプション-->
+  <div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="add-user-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="add-user-title">ユーザー追加</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                      <div class="form-group">
+                          <label for="input-user-name-value">ユーザーを追加する前にHue Bridgeのボタンを押してください </label>
+                          <input type="text" class="form-control" id="input-user-name-value" placeholder="JohnSmith">
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                  <button type="button" class="btn btn-primary" id="add-user-button">追加</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="select-user-modal" tabindex="-1" role="dialog" aria-labelledby="select-user-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="select-user-title">ユーザー選択</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <label for="user-list-group">Who Are You? Select one to use Bridge!</label>
+                  <div class="list-group" id="user-list-group">
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Modal for finding hue bridge -->
+  <div class="modal fade" id="find-bridge-modal" tabindex="-1" role="dialog" aria-labelledby="add-user-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="find-bridge-title">Find Bridge</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Searching for Hue Bridge...
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <a href="#" class="list-group-item list-group-item-action user-item" id="user-item-sample" style="display: none"  value="">ShowUser</a>
+
+  <div class="modal fade" id="select-bridge-modal" tabindex="-1" role="dialog" aria-labelledby="select-user-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="select-bridge-title">ユーザー選択</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <label for="bridge-list-group">Select one bridge to use!</label>
+                  <div class="list-group" id="bridge-list-group">
+                      <a href="#" class="list-group-item list-group-item-action user-item">Bridge1</a>
+                      <a href="#" class="list-group-item list-group-item-action user-item">Bridge2</a>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="bs-callout bs-callout-default">
+      <div>
+          <h4>Hue Bridge Info</h4>
+      </div>
+      <div class="hue-bridge-info">
+          <div id="bridge-unfound">
+              <div class="col">
+                  Hue Bridgeが見つかりませんでした。
+              </div>
+          </div>
+          <div id="bridge-found">
+              <div class="col">
+                  <p class="text-left hue-bridge-name">
+                      <a class="text-dark">Hue Bridge名前　:</a>
+                      <a class="text-dark" id="hue-bridge-name">Name</a>
+                  </p>
+              </div>
+              <div class="col hue-bridge-ip">
+                  <p class="text-left">
+                      <a class="text-dark">Hue Bridge IPアドレス:</a>
+                      <a class="text-dark" id="hue-bridge-ip">IP</a>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="bs-callout bs-callout-info hue-control-panel">
+      <h4>Hue Dashboard</h4>
+      <div class="bs-callout bs-callout-warning hue-dashboard">
+          <div class="row">
+              <h4>Hueの名前とタイトル</h4>
+          </div>
+          <div class="row hue-light-info">
+              <div class="col">
+                  <p class="text-left">
+                      <a class="text-dart">名前:</a>
+                      <a class="text-dark" id="hue-light-name">Name</a>
+                  </p>
+              </div>
+              <div class="col">
+                  <p class="text-left">
+                      <a class="text-dart">場所:</a>
+                      <a class="text-dark" id="hue-light-location">location</a>
+                  </p>
+              </div>
+          </div>
+          <div class="row">
+              <p class="text-left control-buttons">
+                  <button type="button" class="btn btn-secondary" id="turn-on-off">Turn ON</button>
+                  <button type="button" class="btn btn-secondary" id="select">Select</button>
+                  <button type="button" class="btn text-white jscolor {valueElement:null,value:'66ccff'}" id="change-color">Change Color</button>
+              </p>
+              <div class="brightness-adjust">
+                  <a class="text-left text-dark">Brightness Adjustment</a>
+                  <input type="range" id="slider-1"
+                         min="0" max="254" step="1" value="50">
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      // Initialize Firebase
+      var config = {
+          apiKey: "AIzaSyCUVNLMXvcKTRH2-roWljujESvaE68zdHI",
+          authDomain: "rcs-hue-control-demo.firebaseapp.com",
+          databaseURL: "https://rcs-hue-control-demo.firebaseio.com",
+          projectId: "rcs-hue-control-demo",
+          storageBucket: "rcs-hue-control-demo.appspot.com",
+          messagingSenderId: "702777415011"
+      };
+      firebase.initializeApp(config);
+  </script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+    <!-- Optional JavaScript -->
+    <script src="https://unpkg.com/popper.js"></script>
+    <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- user's js scripts -->
+    <script src="scripts/control.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/jscolor.js"></script>
+    <script src="scripts/slider.js"></script>
+  </body>
+</html>

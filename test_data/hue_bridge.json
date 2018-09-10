@@ -1,0 +1,17 @@
+{
+  "hub_bridge_info":
+  {
+    "test_hue_bridge": {
+      "MAC":"001788FFFEB2478E",
+      "IP":"172.20.10.13",
+      "Name":"テスト"
+    }
+  },
+  "hue_bridge_user_info":
+  {
+    "test_user": {
+      "username": "test_user",
+      "token":"5R2IiSWmPqA6X9mGu4Wkf7GxbfYM9x-tReffL7Tf"
+    }
+  }
+}
